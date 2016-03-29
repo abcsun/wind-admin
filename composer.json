@@ -1,0 +1,33 @@
+{
+    "name": "wind/admin",
+    "description": "wind admin package",
+    "authors": [
+        {
+            "name": "sun",
+            "email": "chenglongsun_nj@163.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wind\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/",
+            "database/"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist",
+        "secure-http":false
+    },
+    "repositories": [
+        {"type": "composer", "url": "http://packagist.phpcomposer.com"},
+        {"packagist": false}
+    ]
+}
