@@ -33,21 +33,33 @@ $api->version('v1', [
     ], function ($api) {
         $api->get('/api1', [
             'as' => 'test.api1',
-            function(){
+            function () {
                 return response_json(1, 'test.api1', 'success');
             },
         ]);
         $api->get('/api2', [
             'as' => 'test.api2',
-            function(){
+            function () {
                 return response_json(1, 'test.api2', 'success');
             },
         ]);
         $api->get('/api3', [
             'as' => 'test.api3',
-            function(){
+            function () {
                 return response_json(1, 'test.api3', 'success');
             },
+        ]);
+
+    });
+
+    //系统服务类API
+    $api->group(['prefix' => 'v1/system',
+        // 'middleware' => ['api.auth', 'acl'],
+        'providers' => ['jwt', 'basic', 'oauth'],
+    ], function ($api) {
+        $api->delete('/cache/{tag}', [
+            'as' => 'system.delete.cache',
+            'uses' => 'SystemController@flushCacheByTag',
         ]);
 
     });
@@ -85,7 +97,7 @@ $api->version('v1', [
             'as' => 'config.delete',
             'uses' => 'ConfigController@delete',
         ]);
-        $api->post('/{batch_operation}', [
+        $api->put('/{batch_operation}', [
             'as' => 'config.batch.operation',
             'uses' => 'ConfigController@batchOperation',
         ]);
@@ -132,7 +144,7 @@ $api->version('v1', [
             'as' => 'user.add.role',
             'uses' => 'UserController@addRoles',
         ]);
-        $api->post('/{batch_operation}', [
+        $api->put('/{batch_operation}', [
             'as' => 'user.batch',
             'uses' => 'UserController@batchOperation',
         ]);
@@ -171,7 +183,7 @@ $api->version('v1', [
             'as' => 'api.delete',
             'uses' => 'GrantApiController@delete',
         ]);
-        $api->post('/{batch_operation}', [
+        $api->put('/{batch_operation}', [
             'as' => 'api.batch.operation',
             'uses' => 'GrantApiController@batchOperation',
         ]);
@@ -218,7 +230,7 @@ $api->version('v1', [
             'as' => 'permission.add.api',
             'uses' => 'PermissionController@addGrantApis',
         ]);
-        $api->post('/{batch_operation}', [
+        $api->put('/{batch_operation}', [
             'as' => 'permission.batch.operation',
             'uses' => 'PermissionController@batchOperation',
         ]);
@@ -261,7 +273,7 @@ $api->version('v1', [
             'as' => 'role.add.permission',
             'uses' => 'RoleController@addPermissions',
         ]);
-        $api->post('/{batch_operation}', [
+        $api->put('/{batch_operation}', [
             'as' => 'role.batch.operation',
             'uses' => 'RoleController@batchOperation',
         ]);

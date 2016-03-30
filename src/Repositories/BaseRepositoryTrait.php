@@ -159,10 +159,10 @@ trait BaseRepositoryTrait
             case 'delete':
                 $data = ['deleted_at' => time()];
                 break;
-            case 'forbid':
+            case 'disable':
                 $data = ['x_status' => 0];
                 break;
-            case 'startup':
+            case 'enable':
                 $data = ['x_status' => 1];
                 break;
             default:

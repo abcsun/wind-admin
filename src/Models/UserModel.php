@@ -2,10 +2,8 @@
 
 namespace Wind\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -162,84 +160,5 @@ class UserModel extends AbstractModel implements
 
         UserProfileModel::where('user_id', $this->id)->delete();
         UserRoleModel::where('user_id', $this->id)->delete();
-    }
-
-    /**
-     * Get the recent action history for the user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function revisions()
-    {
-        return $this->hasMany(Config::get('credentials.revision'));
-    }
-
-    /**
-     * Get the user's action history.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function actions()
-    {
-        return $this->revisions()
-            ->where(function ($q) {
-                $q->where('revisionable_type', '<>', get_class($this))
-                    ->where('user_id', '=', $this->id);
-            })
-            ->orWhere(function ($q) {
-                $q->where('revisionable_type', '=', get_class($this))
-                    ->where('revisionable_id', '<>', $this->id)
-                    ->where('user_id', '=', $this->id);
-            })
-            ->orderBy('id', 'desc')->take(20);
-    }
-
-    /**
-     * Get the user's security history.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function security()
-    {
-        return $this->revisionHistory()->orderBy('id', 'desc')->take(20);
-    }
-
-    /**
-     * Activated at accessor.
-     *
-     * @param string $value
-     *
-     * @return \Carbon\Carbon|false
-     */
-    public function getActivatedAtAccessor($value)
-    {
-        if ($value) {
-            return new Carbon($value);
-        }
-
-        if ($this->getAttribute('activated')) {
-            return $this->getAttribute('created_at');
-        }
-
-        return false;
-    }
-
-    /**
-     * Check a user's access.
-     *
-     * @param string|string[] $permissions
-     * @param bool            $all
-     *
-     * @return bool
-     */
-    public function hasAccess($permissions, $all = true)
-    {
-        $key = sha1(json_encode($permissions).json_encode($all));
-
-        if (!array_key_exists($key, $this->access)) {
-            $this->access[$key] = parent::hasAccess($permissions, $all);
-        }
-
-        return $this->access[$key];
     }
 }

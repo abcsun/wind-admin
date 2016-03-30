@@ -12,6 +12,7 @@ namespace Wind\Http\Controllers;
 use Illuminate\Http\Request;
 use Wind\Facades\ConfigRepository as ConfRepo;
 use Wind\Transformers\ConfigTransformer;
+
 /**
  * 配置管理
  * Date: 16/3/12
@@ -36,7 +37,6 @@ class ConfigController extends BaseController
         $list = ConfRepo::find(intval($id));
 
         return $this->item($list, new ConfigTransformer(), 1, '获取成功');
-
     }
 
     /**
@@ -50,7 +50,6 @@ class ConfigController extends BaseController
         $list = ConfRepo::searchData($request->all(), $per_page);
 
         return $this->paginate($list, new ConfigTransformer(), 1, '获取成功');
-
     }
 
     public function store(Request $request)
@@ -100,6 +99,5 @@ class ConfigController extends BaseController
         ConfRepo::afterProcess(3, $data);
 
         return $this->item($list, new ConfigTransformer(), 1, '操作成功');
-
     }
 }

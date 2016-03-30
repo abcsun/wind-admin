@@ -36,9 +36,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->group(['namespace' => 'Wind\Http\Controllers'], function ($app) {
             require __DIR__.'/../Http/routes.php';
-        });       
+        });
     }
-    
+
     /**
      * Register any application services.
      */

@@ -43,6 +43,7 @@ class RevisionRepository extends AbstractRepository
         if ($return) {
             return $return;
         }
+
         return false;
     }
 

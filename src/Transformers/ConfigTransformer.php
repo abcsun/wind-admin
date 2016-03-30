@@ -4,10 +4,10 @@ namespace Wind\Transformers;
 
 use League\Fractal\TransformerAbstract;
 use Wind\Models\ConfigModel;
+
 /**
- *
  * Date: 16/3/26
- * Author: eric <eric@winhu.com>
+ * Author: eric <eric@winhu.com>.
  */
 class ConfigTransformer extends TransformerAbstract
 {
@@ -18,13 +18,12 @@ class ConfigTransformer extends TransformerAbstract
      */
     public function transform(ConfigModel $model)
     {
-
         return [
-            'id' => (int)$model->id,
+            'id' => (int) $model->id,
             'type' => $model->type,
             'group' => $model->group,
             'sort' => $model->sort,
-            'name'  => $model->name,
+            'name' => $model->name,
             'title' => $model->title,
             'value' => $model->value,
             'remark' => $model->remark,

@@ -43,6 +43,7 @@ class RevisionController extends BaseController
         if ($list) {
             return response_json(1, $list, '操作成功');
         }
+
         return response_json(0, $list, '操作失败');
     }
 

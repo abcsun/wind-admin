@@ -24,20 +24,20 @@ class UserRepository extends AbstractRepository
      */
     public function assertAccess($user_id, $api_slug)
     {
-        $result = UserModel::leftJoin('user_role', function($join) use ($user_id){
+        $result = UserModel::leftJoin('user_role', function ($join) use ($user_id) {
                         $join->on('user.id', '=', 'user_role.user_id')
                             ->whereNull('user_role.deleted_at')
                             ->where('user.id', '=', $user_id);
                     })
-                    ->leftJoin('role_permission', function($join){
+                    ->leftJoin('role_permission', function ($join) {
                         $join->on('user_role.role_id', '=', 'role_permission.role_id')
                             ->whereNull('role_permission.deleted_at');
                     })
-                    ->leftJoin('permission_grant_api', function($join){
+                    ->leftJoin('permission_grant_api', function ($join) {
                         $join->on('role_permission.permission_id', '=', 'permission_grant_api.permission_id')
                             ->whereNull('permission_grant_api.deleted_at');
                     })
-                    ->leftJoin('grant_api', function($join) use ($api_slug){
+                    ->leftJoin('grant_api', function ($join) use ($api_slug) {
                         $join->on('permission_grant_api.grant_api_id', '=', 'grant_api.id')
                             ->whereNull('grant_api.deleted_at')
                             ->where('grant_api.slug', '=', $api_slug);
@@ -64,17 +64,41 @@ class UserRepository extends AbstractRepository
      */
     public function addRoles($id, array $role_ids)
     {
-        // TODO: 新增和移除优化
-        UserRoleModel::where('user_id', $id)->delete();
+        $current_ids = UserRoleModel::where('user_id', $id)->lists('role_id')->toArray();
+        $delete_ids = array_values(array_diff($current_ids, $role_ids));
+        $create_ids = array_values(array_diff($role_ids, $current_ids));
+        $delete_count = count($delete_ids);
+        $create_count = count($create_ids);
+        $min_count = min($delete_count, $create_count);
 
-        $data['user_id'] = $id;
-        foreach ($role_ids as $role_id) {
-            $data['role_id'] = $role_id;
-            $model = UserRoleModel::where($data)->first();
-            if (!$model) { //防止重复添加
-                UserRoleModel::create($data);
+        if ($create_count > $delete_count) {
+            //新增多出
+            for ($i = $delete_count; $i < $create_count; ++$i) {
+                // var_dump('新增多出role_id='.$create_ids[$i]);
+                UserRoleModel::create(['user_id' => $id, 'role_id' => $create_ids[$i]]);
             }
+        } elseif ($create_count < $delete_count) {
+            // 删除以前记录中多余的
+            $should_delete_ids = array_slice($delete_ids, $min_count, ($delete_count - $create_count));
+            UserRoleModel::where('user_id', $id)->whereIn('role_id', $should_delete_ids)->delete();
+        } else {
         }
+        // 按顺序修改原来的关系为新的值
+        for ($i = 0; $i < $min_count; ++$i) {
+            UserRoleModel::where(['user_id' => $id, 'role_id' => $delete_ids[$i]])->update(['role_id' => $create_ids[$i]]);
+        }
+
+        // TODO: 新增和移除优化
+        // UserRoleModel::where('user_id', $id)->delete();
+
+        // $data['user_id'] = $id;
+        // foreach ($role_ids as $role_id) {
+        //     $data['role_id'] = $role_id;
+        //     $model = UserRoleModel::where($data)->first();
+        //     if (!$model) { //防止重复添加
+        //         UserRoleModel::create($data);
+        //     }
+        // }
 
         return true;
     }

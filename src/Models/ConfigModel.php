@@ -24,7 +24,7 @@ class ConfigModel extends AbstractModel
      * @var string
      */
     public static $name = 'grant_api';
-    
+
     /**
      *可批量操作列名.
      *

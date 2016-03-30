@@ -11,7 +11,7 @@ use Venturecraft\Revisionable\RevisionableTrait;
 abstract class AbstractModel extends Eloquent
 {
     use BaseModelTrait, RevisionableTrait;
-    
+
     protected $revisionCreationsEnabled = true;
     /**
      * A list of methods protected from mass assignment.

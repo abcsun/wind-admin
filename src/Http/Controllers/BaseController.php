@@ -54,12 +54,12 @@ class BaseController extends Controller
         $success_ids = [];
         $success_count = 0;
         foreach ($data as $key => $value) {
-            try{
-                if($this->r->update($value['id'], $value['data'])){
+            try {
+                if ($this->r->update($value['id'], $value['data'])) {
                     $success_ids[] = $value['id'];
-                    $success_count++;
+                    ++$success_count;
                 }
-            }catch(NotFoundHttpException $e){
+            } catch (NotFoundHttpException $e) {
             }
         }
 
@@ -67,15 +67,18 @@ class BaseController extends Controller
     }
 
     /**
-     * 批量软删除
-     * @param  Request $request [description]
-     * @return [type]           [description]
+     * 批量软删除.
+     *
+     * @param Request $request [description]
+     *
+     * @return [type] [description]
      */
     public function batchSoftDelete(Request $request)
     {
         $str = $request->input('ids', '');
         $ids = parse_ids_from_str($str);
         $count = $this->r->getModel()->whereIn('id', $ids)->delete();
+
         return response_json(1, $count, '成功删除'.$count.'个记录');
     }
 
@@ -91,8 +94,8 @@ class BaseController extends Controller
     {
         $operation_types = [
             'delete',
-            'startup',
-            'forbid',
+            'enable',
+            'disable',
         ];
         if (!in_array($operation, $operation_types)) {
             return response_json(0, '', '请求不存在', 404);
