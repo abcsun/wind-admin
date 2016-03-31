@@ -2,7 +2,6 @@
 
 namespace Wind\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
@@ -22,7 +21,7 @@ class UserModel extends AbstractModel implements
     AuthorizableContract,
     JWTSubject
 {
-    use BelongsToManyRolesTrait, HasOneProfileTrait, SoftDeletes, Authenticatable, Authorizable;
+    use BelongsToManyRolesTrait, HasOneProfileTrait, Authenticatable, Authorizable;
 
     /**
      * 表名.

@@ -2,8 +2,6 @@
 
 namespace Wind\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
 use Wind\Models\Relations\HasOneProfileTrait;
 
 /**
@@ -13,7 +11,7 @@ use Wind\Models\Relations\HasOneProfileTrait;
  */
 class GrantApiModel extends AbstractModel
 {
-    use HasOneProfileTrait, SoftDeletes;
+    use HasOneProfileTrait;
 
     /**
      * 表名.

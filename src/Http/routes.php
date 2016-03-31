@@ -145,7 +145,7 @@ $api->version('v1', [
             'uses' => 'UserController@addRoles',
         ]);
         $api->put('/{batch_operation}', [
-            'as' => 'user.batch',
+            'as' => 'user.batch.operation',
             'uses' => 'UserController@batchOperation',
         ]);
     });

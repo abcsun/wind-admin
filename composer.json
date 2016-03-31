@@ -9,7 +9,12 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=5.5.9",
+        "dingo/api": "dev-master#595436348703f03917cad512ee5bb67fcb9004fc",
+        "tymon/jwt-auth": "0.6.*@dev",
+        "predis/predis": "^1.0",
+        "venturecraft/revisionable": "^1.27",
+        "illuminate/redis": "^5.2"
     },
     "autoload": {
         "psr-4": {

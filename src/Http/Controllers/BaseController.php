@@ -105,7 +105,7 @@ class BaseController extends Controller
         $ids = parse_ids_from_str($str);
         $result = $this->r->batch($operation, $ids);
 
-        return response_json(1, $result, '操作成功');
+        return response_json(1, $result, '批量操作成功');
     }
 
     /**

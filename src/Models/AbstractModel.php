@@ -4,13 +4,14 @@ namespace Wind\Models;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Venturecraft\Revisionable\RevisionableTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * This is the abstract model class.
  */
 abstract class AbstractModel extends Eloquent
 {
-    use BaseModelTrait, RevisionableTrait;
+    use BaseModelTrait, RevisionableTrait, SoftDeletes;
 
     protected $revisionCreationsEnabled = true;
     /**

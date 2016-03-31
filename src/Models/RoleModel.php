@@ -2,8 +2,6 @@
 
 namespace Wind\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
 use Wind\Models\Relations\BelongsToManyPermissionsTrait;
 
 /**
@@ -13,7 +11,7 @@ use Wind\Models\Relations\BelongsToManyPermissionsTrait;
  */
 class RoleModel extends AbstractModel
 {
-    use BelongsToManyPermissionsTrait, SoftDeletes;
+    use BelongsToManyPermissionsTrait;
 
     /**
      * 表名.

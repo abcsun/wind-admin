@@ -92,11 +92,11 @@ class ConfigController extends BaseController
      */
     public function delete($id = 0)
     {
-        $model = ConfRepo::find($id);
-        $data['name'] = $model->name;
+        // $model = ConfRepo::find($id);
+        // $data['name'] = $model->name;
 
-        $list = ConfRepo::delete(intval($id));
-        ConfRepo::afterProcess(3, $data);
+        $list = ConfRepo::delete($id);
+        // ConfRepo::afterProcess(3, $data);
 
         return $this->item($list, new ConfigTransformer(), 1, '操作成功');
     }

@@ -2,7 +2,6 @@
 
 namespace Wind\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Wind\Models\Relations\BelongsToManyGrantApisTrait;
 
@@ -13,7 +12,7 @@ use Wind\Models\Relations\BelongsToManyGrantApisTrait;
  */
 class PermissionModel extends AbstractModel
 {
-    use BelongsToManyGrantApisTrait, SoftDeletes;
+    use BelongsToManyGrantApisTrait;
 
     /**
      * 表名.

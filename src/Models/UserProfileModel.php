@@ -2,8 +2,6 @@
 
 namespace Wind\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 /**
  * user model.
  *
@@ -11,8 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class UserProfileModel extends AbstractModel
 {
-    use SoftDeletes;
-
     /**
      * 表名.
      *

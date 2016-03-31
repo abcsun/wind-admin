@@ -2,9 +2,6 @@
 
 namespace Wind\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * user role relation model.
  *
@@ -12,8 +9,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class UserRoleModel extends AbstractModel
 {
-    use SoftDeletes;
-
     /**
      * 表名.
      *

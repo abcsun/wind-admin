@@ -11,7 +11,7 @@ class UserRoleRelationChangedEvent extends Event
 {
     // use SerializesModels;
 
-    public $user_id;
+    public $user;
 
     /**
      * Create a new event instance.
