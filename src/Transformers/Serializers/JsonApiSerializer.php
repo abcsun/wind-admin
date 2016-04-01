@@ -143,4 +143,13 @@ class JsonApiSerializer extends SerializerAbstract
     public function cursor(CursorInterface $cursor)
     {
     }
+
+    /**
+     * abstract method in League\\Fractal\\Serializer\\SerializerAbstract::null
+     * 
+     * @return [type] [description]
+     */
+    public function null()
+    {
+    }
 }
