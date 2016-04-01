@@ -15,7 +15,7 @@ class AddRoleTable extends Migration
 
             $table->string('name')->comment('角色名称');
             $table->tinyInteger('type')->default(2)->comment('角色类型；1-后台管理员；2-普通用户');
-            $table->string('description')->after('type')->comment('角色描述');
+            $table->string('description')->comment('角色描述');
 
             $table->tinyInteger('x_status')->default(1)->comment('启停标志,0-禁用');
 

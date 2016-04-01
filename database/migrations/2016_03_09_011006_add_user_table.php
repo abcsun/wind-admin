@@ -18,7 +18,7 @@ class AddUserTable extends Migration
             $table->string('password')->comment('密码');        //密码
             $table->string('name')->comment('用户昵称');               //用户昵称
             $table->string('gravatar')->comment('头像');           //头像
-            $table->string('role', 16)->after('gravatar')->default('user')->comment('表征用户当前最高角色user/admin，默认为user');
+            $table->string('role', 16)->default('user')->comment('表征用户当前最高角色user/admin，默认为user');
             
             $table->boolean('is_teacher')->comment('教师标记');        //教师标记
             $table->tinyInteger('x_status')->default(1)->comment('启停标志,0-禁用');
