@@ -145,7 +145,7 @@ class JsonApiSerializer extends SerializerAbstract
     }
 
     /**
-     * abstract method in League\\Fractal\\Serializer\\SerializerAbstract::null
+     * abstract method in League\\Fractal\\Serializer\\SerializerAbstract::null.
      * 
      * @return [type] [description]
      */

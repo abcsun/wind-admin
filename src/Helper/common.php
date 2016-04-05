@@ -410,24 +410,24 @@ if (!function_exists('update_statistics_field')) {
     }
 }
 
-if (!function_exists('formate_page_data')) {
+if (!function_exists('formate_pagination')) {
     /**
      * 格式化分页数据信息.
      *
-     * @param [type] $pagination_data [description]
+     * @param Paginator $pagination_data [description]
      *
-     * @return [type] [description]
+     * @return array [description]
      */
-    function formate_page_data($pagination_data)
+    function formate_pagination($pagination_data)
     {
+        $pagination_data = $pagination_data->toArray();
 
         //过滤有效参数
         $pagination = array(
-            'total' => $pagination_data['total'],
-            'per_page' => $pagination_data['per_page'],
+            'total' => (int) $pagination_data['total'],
+            'per_page' => (int) $pagination_data['per_page'],
             'current_page' => $pagination_data['current_page'],
-            'next_page' => $pagination_data['current_page'] + 1,
-            'last_page' => $pagination_data['last_page'],
+            'total_page' => $pagination_data['last_page'],
 
         );
 

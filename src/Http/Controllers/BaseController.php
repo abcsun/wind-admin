@@ -35,18 +35,83 @@ class BaseController extends Controller
     }
 
     /**
-     * index路由，用于资源分页展示
+     * index路由，用于资源分页展示.
+     * 
      * @return [type] [description]
      */
     public function index()
     {
         $data = $this->r->all();
 
-        return response_json(1, $data, 'success');
+        return response_json(1, $data->items(), '获取成功', 200, formate_pagination($data));
     }
-    
+
     /**
-     * 批量修改接口
+     * 创建新的记录.
+     * 
+     * @param Request $request [description]
+     *
+     * @return [type] [description]
+     */
+    public function store(Request $request)
+    {
+        $data = $request->all();
+        $this->r->validate($data);
+
+        $item = $this->r->create($data);
+
+        return response_json(1, $item, '创建成功');
+    }
+
+    /**
+     * 修改已有资源.
+     *
+     * @param Request $request [description]
+     * @param [type]  $id      [description]
+     *
+     * @return [type] [description]
+     */
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+
+        $item = $this->r->update($id, $data);
+
+        return response_json(1, $item, '修改成功');
+    }
+
+    /**
+     * 获取单个资源.
+     *
+     * @param Request $request [description]
+     * @param [type]  $id      [description]
+     *
+     * @return [type] [description]
+     */
+    public function show(Request $request, $id)
+    {
+        $item = $this->r->find($id);
+
+        return response_json(1, $item, '获取成功');
+    }
+
+    /**
+     * 删除单个资源.
+     *
+     * @param Request $request [description]
+     * @param [type]  $id      [description]
+     *
+     * @return [type] [description]
+     */
+    public function delete(Request $request, $id)
+    {
+        $item = $this->r->delete($id);
+
+        return response_json(1, '删除成功', '删除成功');
+    }
+
+    /**
+     * 批量修改已有资源接口
      * 请求为json格式，如下
      * {
      *     "data": [
@@ -120,29 +185,6 @@ class BaseController extends Controller
     }
 
     /**
-     * 根据请求中的token从缓存中直接获取用户.
-     *
-     * @return UserModel
-     */
-    public function checkUserByToken()
-    {
-        return Cache::get(Config('sys.USER_CACHE_PREFIX').md5(JWTAuth::getToken()));
-    }
-
-    /**
-     * 检查资源是否存在，不存在时抛出404异常，终止运行.
-     * 
-     * @param $model
-     * @param $msg
-     */
-    public function checkModelExists($model, $msg = '资源不存在')
-    {
-        if (!$model) {
-            throw new NotFoundHttpException($msg);
-        }
-    }
-
-    /**
      * 基于Dingo的transformer对单个数据进行统一，并采用自定义的JsonApiSerializer进行格式化.
      *
      * @param [type] $model       [description]
@@ -212,5 +254,28 @@ class BaseController extends Controller
                     $fractal->setSerializer(new JsonApiSerializer($code, $msg));
                 }
             )->statusCode($http_status);
+    }
+
+    /**
+     * 根据请求中的token从缓存中直接获取用户.
+     *
+     * @return UserModel
+     */
+    public function checkUserByToken()
+    {
+        return Cache::get(Config('sys.USER_CACHE_PREFIX').md5(JWTAuth::getToken()));
+    }
+
+    /**
+     * 检查资源是否存在，不存在时抛出404异常，终止运行.
+     * 
+     * @param $model
+     * @param $msg
+     */
+    public function checkModelExists($model, $msg = '资源不存在')
+    {
+        if (!$model) {
+            throw new NotFoundHttpException($msg);
+        }
     }
 }
