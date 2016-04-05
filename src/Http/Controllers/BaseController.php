@@ -33,7 +33,8 @@ class BaseController extends Controller
         // $this->user = $this->checkUserByToken();
         $this->user = $request->user();
     }
-/**
+
+    /**
      * index路由，用于资源分页展示
      * @return [type] [description]
      */
@@ -43,6 +44,7 @@ class BaseController extends Controller
 
         return response_json(1, $data, 'success');
     }
+    
     /**
      * 批量修改接口
      * 请求为json格式，如下
