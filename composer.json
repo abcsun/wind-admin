@@ -1,0 +1,28 @@
+{
+    "name": "winhu/admin",
+    "description": "winhu admin package",
+    "authors": [
+        {
+            "name": "sun",
+            "email": "chenglongsun_nj@163.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wind\\": "src/"
+        },
+        "files": [
+            "src/Helper/common.php"
+        ]
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/",
+            "database/"
+        ]
+    }
+}
