@@ -32,7 +32,7 @@ class ConfigController extends BaseController
      *
      * @return $this
      */
-    public function show($id = 0)
+    public function show(Request $request, $id = 0)
     {
         $list = ConfRepo::find(intval($id));
 
@@ -90,7 +90,7 @@ class ConfigController extends BaseController
      *
      * @return $this
      */
-    public function delete($id = 0)
+    public function delete(Request $request, $id = 0)
     {
         // $model = ConfRepo::find($id);
         // $data['name'] = $model->name;

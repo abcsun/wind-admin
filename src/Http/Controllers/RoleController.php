@@ -19,9 +19,10 @@ class RoleController extends BaseController
         parent::__construct($request);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $data = RoleRepo::all();
+        $per_page = (int) $request->input('per_page', 12);
+        $data = RoleRepo::all($per_page);
 
         return $this->paginate($data, new RoleTransformer(), 1, '获取成功');
     }

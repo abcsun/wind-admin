@@ -19,7 +19,7 @@ class PermissionController extends BaseController
         parent::__construct($request);
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $data = PermissionRepo::getModel()->with('grant_apis')->orderBy('sort', 'asc')->get();
         $permissions = list_to_tree($data->toArray(), 'id', 'pid', 'children');
