@@ -145,6 +145,8 @@ class UserRepository extends AbstractRepository
      */
     public function generateMenuByUser($user_id)
     {
+        $prefix = env('DB_PREFIX', '');
+        $permission_table = $prefix.'permission';
         $menus = UserRoleModel::leftJoin('role_permission', function ($join) use ($user_id) {
                         $join->on('user_role.role_id', '=', 'role_permission.role_id')
                             ->where('user_role.user_id', '=', $user_id)
@@ -159,7 +161,7 @@ class UserRepository extends AbstractRepository
                     ->whereNotNull('role_permission.permission_id')
                     ->whereNotNull('permission.id')
 
-                    ->selectRaw(DB::raw('distinct(wind_permission.id), wind_permission.slug, wind_permission.url, wind_permission.name, wind_permission.pid, wind_permission.type, wind_permission.display_name, wind_permission.description'))
+                    ->selectRaw(DB::raw("distinct($permission_table.id), $permission_table.slug, $permission_table.url, $permission_table.name, $permission_table.pid, $permission_table.type, $permission_table.display_name, $permission_table.description"))
                     ->orderBy('permission.sort', 'asc')
                     ->get();
 
