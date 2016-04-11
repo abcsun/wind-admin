@@ -39,11 +39,12 @@ class BaseController extends Controller
      * 
      * @return [type] [description]
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = $this->r->all();
+        $per_page = (int) $request->input('per_page', 12);
+        $data = $this->r->all($per_page);
 
-        return response_json(1, $data->items(), '获取成功', 200, formate_pagination($data));
+        return response_json(1, $data, '获取成功', 200);
     }
 
     /**
