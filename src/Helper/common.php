@@ -71,17 +71,21 @@ if (!function_exists('response_json')) {
     /**
      * 按照固定格式返回json.
      */
-    function response_json($code = 1, $result = '', $message = '', $status = 200)
+    function response_json($code = 1, $result = '', $message = '', $status = 200, $pagination = null)
     {
         if ($result instanceof \Illuminate\Pagination\LengthAwarePaginator) { //分页数据时提取分页信息组成pagination
             // var_dump($result);
             $pagination = formate_pagination($result);
             $result = $result->items();
             $content = compact('code', 'result', 'message', 'pagination');
-        } else {
+        }else{
             $content = compact('code', 'result', 'message');
+            if($pagination){
+                $content['pagination'] = $pagination;
+            }
+            
         }
-
+        
         return (new Response($content, $status))->header('Content-Type', 'application/json');
     }
 }
@@ -427,7 +431,9 @@ if (!function_exists('formate_pagination')) {
      */
     function formate_pagination($pagination_data)
     {
-        $pagination_data = $pagination_data->toArray();
+        if($pagination_data instanceof \Illuminate\Pagination\LengthAwarePaginator){
+            $pagination_data = $pagination_data->toArray();
+        }
 
         //过滤有效参数
         $pagination = array(
