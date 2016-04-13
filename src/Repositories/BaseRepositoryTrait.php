@@ -53,6 +53,28 @@ trait BaseRepositoryTrait
     }
 
     /**
+     * 当前登录用户查看资源对象，确保如果是普通用户时只能为创建者且只能查看自己的记录，否则返回403 forbid.
+     *
+     * @param [type] $id          [description]
+     * @param [type] $user        [description]
+     * @param string $owner_field [description]
+     *
+     * @return [type] [description]
+     */
+    public function findByUser($id, $user, $owner_field = 'user_id')
+    {
+        $model = $this->find($id);
+
+        if ($user->role == 'user') {
+            if ($model->$owner_field != $user->id) {
+                throw new AccessDeniedHttpException('无权访问资源');
+            }
+        }
+
+        return $model;
+    }
+
+    /**
      * 当前登录用户修改资源对象，确保如果是普通用户时只能为创建者只能修改自己的记录，否则返回403 forbid.
      *
      * @param [type] $id          [description]
