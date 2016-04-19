@@ -26,7 +26,8 @@ class AccountController extends BaseController
      */
     public function probeLogin(Request $request)
     {
-        return response_json(1, $this->user, 'success');
+        $user = UserRepo::getModel()->with('profile')->where('x_status', 1)->find($this->user->id);
+        return response_json(1, $user, 'success');
     }
 
     /**

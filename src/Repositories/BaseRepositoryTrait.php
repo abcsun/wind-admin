@@ -56,6 +56,7 @@ trait BaseRepositoryTrait
      * 当前登录用户查看资源对象，确保如果是普通用户时只能为创建者且只能查看自己的记录，否则返回403 forbid.
      *
      * @param [type] $id          [description]
+     * @param array  $input       [description]
      * @param [type] $user        [description]
      * @param string $owner_field [description]
      *
